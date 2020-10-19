@@ -9,7 +9,8 @@
 <body>
     <div class="boxupload">
         <span>Drag and Drop <br>
-            Your File <br> 
+            Atau <br> 
+            <p style="font-size: 16px;"><label>Upload Your file</label> <input type="file" onchange="fileinput(this)"> </p>
             <p style="font-size: 16px;"> <a href="./sample.docx"> Download Sample File docx upload</a></p>
         </span>
             
@@ -51,6 +52,18 @@
         }
         function handleFiles(files)   {
             ([...files]).forEach(fileinput)
+        }
+        function fileinput(fileinput) {
+            box.querySelector('span').innerHTML = "<a href='#quiz' class='circle'> Mulai Quiz</a>";
+            var files = fileinput.files || [];
+            if (!files.length) return;
+            var file = files[0];
+
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                mammoth.convertToHtml({arrayBuffer: reader.result}).then(loadData);
+            }
+            reader.readAsArrayBuffer(file);
         }
         function uploadFile(files) {
             let file = files;
